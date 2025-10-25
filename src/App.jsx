@@ -1,5 +1,6 @@
 import './App.css'
 
+//This is the functional component named App, will display a simple weather app interface
 function App() {
 
   return (
