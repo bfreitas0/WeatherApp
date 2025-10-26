@@ -38,7 +38,7 @@ function App() {
       <h2>Check the weather in your city</h2>
 
       <div className="search-box">
-        <input type="text" placeholder="Enter your city"value={city}onChange={(e) => setCity(e.target.value)}/>
+        <input type="text" placeholder="Enter your city" value={city}onChange={(e) => setCity(e.target.value)}/>
         <button onClick={handleSearch}>Submit</button>
       </div>
 
