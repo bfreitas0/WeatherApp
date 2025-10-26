@@ -1,19 +1,58 @@
+import { useState } from 'react'
 import './App.css'
 
-//This is the functional component named App, will display a simple weather app interface
+const API_KEY = 'a0fe4269f48b669ffc00fb772ba59f9b'
+
 function App() {
 
+  const [city, setCity] = useState('')
+  const [weather, setWeather] = useState(null)
+  const [error, setError] = useState(null)
+
+  const handleSearch = async () => {
+
+    if (!city) return
+
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+      )
+
+      if (!response.ok) {
+        throw new Error('City not found')
+      }
+
+      const data = await response.json()
+      setWeather(data)
+      setError(null)
+    } catch (err) {
+      setError(err.message)
+      setWeather(null)
+    }
+  }
+
   return (
-    <>
-      <div>
-        <h1>Weather App</h1>
-        <h2>Weather in your city</h2>
-        <div>
-          <input type="text" name="city" placeholder='Enter your city '/>
-          <button className='btn'>Submit</button>
-        </div>
+
+    <div className="container">
+      <h1>Weather App</h1>
+      <h2>Check the weather in your city</h2>
+
+      <div className="search-box">
+        <input type="text" placeholder="Enter your city"value={city}onChange={(e) => setCity(e.target.value)}/>
+        <button onClick={handleSearch}>Submit</button>
       </div>
-    </>
+
+      {error && <p className="error">{error}</p>}
+
+      {weather && (
+        <div className="weather-info">
+          <h3>{weather.name}</h3>
+          <p>{weather.weather[0].description}</p>
+          <p>{weather.main.temp} °C</p>
+          <p>{weather.wind.speed} m/s</p>
+        </div>
+      )}
+    </div>
   )
 }
 
