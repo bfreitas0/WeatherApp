@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 
+
+//Soon integrating for .ENV
 const API_KEY = 'Insert Key'
 
 function App() {
